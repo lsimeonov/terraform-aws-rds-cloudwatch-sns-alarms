@@ -1,16 +1,11 @@
+variable "sns-topic-arn" {
+  description = "Specific SNS ARN"
+  type = "string"
+}
+
 variable "db_instance_id" {
   description = "The instance ID of the RDS database instance that you want to monitor."
   type        = "string"
-}
-
-variable "alarms-email"{
-  description = "Single email that will be subscribed to the SNS topic"
-  type = "string"
-}
-
-variable "aws-profile" {
-  description = "AWS CLI profile to use when executing cli commands"
-  type = "string"
 }
 
 variable "burst_balance_threshold" {
@@ -59,10 +54,4 @@ variable "swap_usage_threshold" {
   default     = 256000000
 
   # 256 Megabyte in Byte
-}
-
-variable "sns-topic-name" {
-  description = "Specific SNS topic name"
-  type = "string"
-  default = "rds-threshold-alerts"
 }
