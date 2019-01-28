@@ -50,3 +50,9 @@ variable "swap_usage_threshold" {
 
   # 256 Megabyte in Byte
 }
+
+variable "sns-topic-name" {
+  description = "Specific SNS topic name"
+  type = "string"
+  default = "rds-threshold-alerts"
+}

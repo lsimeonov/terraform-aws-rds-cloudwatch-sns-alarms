@@ -9,7 +9,7 @@ data "aws_caller_identity" "default" {}
 
 # Make a topic
 resource "aws_sns_topic" "default" {
-  name_prefix = "rds-threshold-alerts"
+  name_prefix = "${var.sns-topic-name}"
 }
 
 resource "aws_db_event_subscription" "default" {
