@@ -3,6 +3,16 @@ variable "db_instance_id" {
   type        = "string"
 }
 
+variable "alarms-email"{
+  description = "Single email that will be subscribed to the SNS topic"
+  type = "string"
+}
+
+variable "aws-profile" {
+  description = "AWS CLI profile to use when executing cli commands"
+  type = "string"
+}
+
 variable "burst_balance_threshold" {
   description = "The minimum percent of General Purpose SSD (gp2) burst-bucket I/O credits available."
   type        = "string"

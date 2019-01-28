@@ -10,6 +10,10 @@ data "aws_caller_identity" "default" {}
 # Make a topic
 resource "aws_sns_topic" "default" {
   name_prefix = "${var.sns-topic-name}"
+
+  provisioner "local-exec" {
+    command = "aws --profile ${var.aws-profile} sns subscribe --topic-arn ${self.arn} --protocol email --notification-endpoint ${var.alarms-email}"
+  }
 }
 
 resource "aws_db_event_subscription" "default" {
