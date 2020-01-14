@@ -9,10 +9,10 @@ data "aws_caller_identity" "default" {}
 
 resource "aws_db_event_subscription" "default" {
   name_prefix = "rds-event-sub"
-  sns_topic   = "${var.sns-topic-arn}"
+  sns_topic   = var.sns-topic-arn
 
   source_type = "db-instance"
-  source_ids  = ["${var.db_instance_id}"]
+  source_ids  = [var.db_instance_id]
 
   event_categories = [
     "failover",
@@ -27,8 +27,8 @@ resource "aws_db_event_subscription" "default" {
 }
 
 resource "aws_sns_topic_policy" "default" {
-  arn    = "${var.sns-topic-arn}"
-  policy = "${data.aws_iam_policy_document.sns_topic_policy.json}"
+  arn    = var.sns-topic-arn
+  policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
 
 data "aws_iam_policy_document" "sns_topic_policy" {
@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
     ]
 
     effect    = "Allow"
-    resources = ["${var.sns-topic-arn}"]
+    resources = [var.sns-topic-arn]
 
     principals {
       type        = "AWS"
@@ -62,7 +62,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
       variable = "AWS:SourceOwner"
 
       values = [
-        "${data.aws_caller_identity.default.account_id}",
+        data.aws_caller_identity.default.account_id,
       ]
     }
   }
@@ -70,7 +70,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow CloudwatchEvents"
     actions   = ["sns:Publish"]
-    resources = ["${var.sns-topic-arn}"]
+    resources = [var.sns-topic-arn]
 
     principals {
       type        = "Service"
@@ -81,7 +81,7 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     sid       = "Allow RDS Event Notification"
     actions   = ["sns:Publish"]
-    resources = ["${var.sns-topic-arn}"]
+    resources = [var.sns-topic-arn]
 
     principals {
       type        = "Service"
